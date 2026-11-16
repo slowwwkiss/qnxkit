@@ -1,0 +1,35 @@
+# qnx-toolchain-aarch64le.cmake — the production QNX toolchain file
+# Qt ships (coin/provisioning/common/shared/cmake_toolchain_files/
+# qnx-toolchain-aarch64le.cmake, Qt 6.7), reproduced as a golden test
+# fixture for `qnxkit toolchain check`. The file below the header is
+# verbatim Qt content; qnxkit's own generator emits the same structure.
+set(CMAKE_SYSTEM_NAME QNX)
+set(CMAKE_SYSTEM_PROCESSOR aarch64le)
+
+if (NOT DEFINED CMAKE_FIND_ROOT_PATH_MODE_PROGRAM)
+    set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+endif()
+if (NOT DEFINED CMAKE_FIND_ROOT_PATH_MODE_LIBRARY)
+    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+endif()
+if (NOT DEFINED CMAKE_FIND_ROOT_PATH_MODE_PACKAGE)
+    set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+endif()
+if (NOT DEFINED CMAKE_FIND_ROOT_PATH_MODE_INCLUDE)
+    set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+endif()
+
+set(CMAKE_FIND_ROOT_PATH $ENV{QNX_TARGET};$ENV{QNX_TARGET}/${CMAKE_SYSTEM_PROCESSOR})
+
+set(_qnx_toolchain_arch gcc_ntoaarch64le)
+
+set(CMAKE_C_COMPILER qcc)
+set(CMAKE_C_COMPILER_TARGET ${_qnx_toolchain_arch})
+set(CMAKE_CXX_COMPILER q++)
+set(CMAKE_CXX_COMPILER_TARGET ${_qnx_toolchain_arch})
+
+set(CMAKE_STRIP $ENV{QNX_HOST}/usr/bin/ntoaarch64-strip)
+set(CMAKE_AR $ENV{QNX_HOST}/usr/bin/ntoaarch64-ar)
+set(CMAKE_OBJCOPY $ENV{QNX_HOST}/usr/bin/ntoaarch64-objcopy)
+
+set(CMAKE_SYSROOT $ENV{QNX_TARGET})

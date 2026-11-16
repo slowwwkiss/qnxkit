@@ -1,0 +1,16 @@
+# qemu-x86_64.build — the complete buildfile from the official QNX
+# walkthrough "QNX From The Board Up #2 - Create a Basic Image"
+# (https://qnx.software/en/blog/2026/qnxe-ftbu-2), reproduced verbatim
+# as a golden test fixture for `qnxkit buildfile check`.
+# It builds a QEMU x86_64 (multiboot) image and boots it with:
+#   mkifs image.build image.ifs
+#   qemu-system-x86_64 -cpu max -smp 1 -display none -kernel image.ifs -serial stdio
+# Expected output on the serial console: "Hello, stranger!"
+
+[virtual=x86_64,multiboot] boot = {
+    startup-x86 -D 8250
+    procnto-smp-instr
+}
+[+script] init = {
+    display_msg "Hello, stranger!"
+}
